@@ -20,8 +20,9 @@ app.use(bodyParser.json({ limit: 2 * 1024 * 1024 }));
 // for line verification
 app.post('/', function (req, res) {
     console.log('req.body :', req.body)
-    console.log('req.body :', req.res)
-    console.log('req.body.result :', req.body.res);
+    console.log('req.res :', req.res)
+    console.log('req.body.res :', req.body.res);
+    console.log('<-------- Here! ---------->');
 
     if (req.body.result) {
         var receives = client.createReceivesFromJSON(req.body);
