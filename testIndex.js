@@ -2,7 +2,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const request = require('superagent')
+const request = require('request')
 const app = express()
 
 app.set('port', (process.env.PORT || 5000))
@@ -33,7 +33,7 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-function replyLineMessage(replyToken, text) {
+function sendLineMessage(replyToken, text) {
 	console.log('text: ', text)
 
 	request
@@ -56,22 +56,22 @@ function replyLineMessage(replyToken, text) {
 }
 
 
-function sendLineMessage(sender, text) {
+function replyLineMessage(replyToken, text) {
 	console.log('text: ', text)
 
     request({
-        url: 'https://api.line.me/v2/bot/message/push',
+        url: 'https://api.line.me/v2/bot/message/reply',
         Authorization: {Bearer: cT},
         method: 'POST',
-        body: {
-            to: {id: sender},
+        body: JSON.stringify({
+            replyToken: replyToken,
             messages: [
             	{
 	            	"type":"text",
 	            	"text":text
 	        	}
 	        ]
-        }
+        })
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)
