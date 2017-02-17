@@ -17,13 +17,8 @@ app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.urlencoded({ extended: false, limit: 2 * 1024 * 1024 }));
 app.use(bodyParser.json({ limit: 2 * 1024 * 1024 }));
 
-// for Facebook verification
+// for line verification
 app.post('/webhook/', function (req, res) {
-    // if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-    //     res.send(req.query['hub.challenge'])
-    // }
-    console.log('inside webhook')
-
     res.send(200)
 })
 
