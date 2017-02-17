@@ -18,10 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false, limit: 2 * 1024 * 1024 }));
 app.use(bodyParser.json({ limit: 2 * 1024 * 1024 }));
 
 // for line verification
-app.post('/webhook/', function (req, res) {
-    res.send(200)
-})
-
 app.post('/', function (req, res) {
   console.log('req.body.result :', req.body.result);
 
@@ -98,7 +94,7 @@ app.post('/', function (req, res) {
 
   });
   
-  res.send('ok');
+  res.send(200);
 });
 
 app.listen(app.get('port'), function () {
