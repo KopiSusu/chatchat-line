@@ -49,11 +49,10 @@ function replyLineMessage(replyToken, text) {
         })
       	.set('Authorization', `Bearer ${cT}`)
       	.end((err, res) => {
-        	if (err) { return reject(err) }
-        	return resolve(res.body)
+            if (err) {
+                console.log('err: ', err)
+            } 
       	})
 }
 
-const cId = '1501651709'
-const cS = '239ce8176ae2ca2edc3939bcf26241ec'
 const cT = 'ToDFVvCpNFbfjtxzR2CDLNTt3aSWAhLN2/9jf03d0VGJSqh4DMSJd+fRm4ZH+TfNmzbWt6VCAosZqxsTmvmbIFLh7nQPLztM7/YIIryklIwG65ds9X11voXd8uPXqjabkrgCZYXnzo3dJNwJQwopIQdB04t89/1O/w1cDnyilFU='
