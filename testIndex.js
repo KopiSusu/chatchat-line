@@ -34,9 +34,10 @@ app.post('/webhook/', line.validator.validateSignature(), (req, res, next) => {
         ]
       })
   })
+
   Promise
     .all(promises)
-    .then(() => res.json({success: true}))
+    .then(() => res.sendStatus(200))
 })
 
 app.listen(process.env.PORT || 3000, () => {
