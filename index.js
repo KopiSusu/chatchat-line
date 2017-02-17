@@ -19,25 +19,26 @@ line.init({
 })
 
 app.post('/webhook/', line.validator.validateSignature(), (req, res, next) => {
-  // get content from request body
-  const promises = req.body.events.map(event => {
-    // reply message
-    console.log(event.message.text)
-    return line.client
-      .replyMessage({
-        replyToken: event.replyToken,
-        messages: [
-          {
-            type: 'text',
-            text: event.message.text
-          }
-        ]
-      })
-  })
+    // get content from request body
+    const promises = req.body.events.map(event => {
+        // reply message
+        console.log(event.message.text)
+        return line.client.replyMessage({
+            replyToken: event.replyToken,
+            messages: [
+              {
+                type: 'text',
+                text: event.message.text
+              }
+            ]
+        })
+    })
 
-  Promise
-    .all(promises)
-    .then(() => res.sendStatus({success: true}))
+    Promise
+        .all(promises)
+        .then(() => res.sendStatus({success: true}))
+
+    res.sendStatus(200)
 })
 
 app.listen(process.env.PORT || 3000, () => {
