@@ -19,7 +19,7 @@ app.listen(app.get('port'), function() {
 })
 
 // Process Messages
-app.post('/', function (req, res) {
+app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.events
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.events[i]
