@@ -62,7 +62,7 @@ function replyLineMessage(replyToken, text) {
     request({
         url: 'https://api.line.me/v2/bot/message/reply',
         headers : {
-        	'Content-Type': 'application/json'
+        	'Content-Type': 'application/json',
             'Authorization' : `Bearer ${cT}`
         },
         method: 'POST',
