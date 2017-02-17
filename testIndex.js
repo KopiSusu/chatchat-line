@@ -22,6 +22,7 @@ app.post('/webhook/', line.validator.validateSignature(), (req, res, next) => {
   // get content from request body
   const promises = req.body.events.map(event => {
     // reply message
+    console.log(event.replyToken)
     return line.client
       .replyMessage({
         replyToken: event.replyToken,
