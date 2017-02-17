@@ -35,26 +35,23 @@ app.post('/webhook/', function (req, res) {
 
 function replyLineMessage(replyToken, text) {
 	console.log('text: ', text)
-    request({
-        url: 'https://api.line.me/v2/bot/message/push',
-        Authorization: {Bearer: cT},
-        method: 'POST',
-        body: `{
-            replyToken: ${replyToken},
-            messages: [
-            	{
-	            	"type":"text",
-	            	"text":${text}
-	        	}
-	        ]
-        }`
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+	request
+      .post('https://api.line.me/v2/bot/message/reply')
+      .send({
+        replyToken: replyToken,
+        messages: [
+          {
+            type: 'text',
+            text: text
+          }
+        ]
+      })
+      .set('Authorization', `Bearer ${cT}`)
+      // .set('Accept', 'application/json')
+      .end((err, res) => {
+        if (err) { return reject(err) }
+        return resolve(res.body)
+      })
 }
 
 
