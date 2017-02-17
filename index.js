@@ -20,8 +20,6 @@ app.use(bodyParser.json({ limit: 2 * 1024 * 1024 }));
 // for line verification
 app.post('/', function (req, res) {
     console.log('req.body :', req.body)
-    console.log('req.res :', req.res)
-    console.log('req.body.res :', req.body.res);
     console.log('<-------- Here! ---------->');
 
     if (req.body.result) {
