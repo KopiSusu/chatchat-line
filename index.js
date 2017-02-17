@@ -1,4 +1,5 @@
 'use strict'
+
 const line = require('node-line-bot-api')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -42,5 +43,5 @@ app.post('/webhook/', line.validator.validateSignature(), (req, res, next) => {
 })
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port 3000!')
 })
