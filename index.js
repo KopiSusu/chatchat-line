@@ -22,66 +22,64 @@ app.post('/', function (req, res) {
     console.log('req.body :', req.body)
     console.log('<-------- Here! ---------->');
 
-    if (req.body.result) {
-        var receives = client.createReceivesFromJSON(req.body);
-        _.each(receives, function(receive){
-            
-            if(receive.isMessage()){
+    const receives = client.createReceivesFromJSON(req.body);
+    _.each(receives, function(receive){
+        
+        if(receive.isMessage()){
 
-                if(receive.isText()){
+            if(receive.isText()){
 
-                    if(receive.getText()==='me'){
-                        client.getUserProfile(receive.getFromMid())
-                            .then(function onResult(res){
-                                if(res.status === 200){
-                                    var contacts = res.body.contacts;
-                                    if(contacts.length > 0){
-                                        client.sendText(receive.getFromMid(), 'Hi!, you\'re ' + contacts[0].displayName);
-                                    }           
-                                }
-                            }, function onError(err){
-                              console.error(err);
-                            });
-                    } else {
-                      client.sendText(receive.getFromMid(), receive.getText());
-                    }
-
-                } else if(receive.isImage()) {
-                    client.sendText(receive.getFromMid(), 'Thanks for the image!');
-                } else if(receive.isVideo()){
-                    client.sendText(receive.getFromMid(), 'Thanks for the video!');
-                } else if(receive.isAudio()) {
-                    client.sendText(receive.getFromMid(), 'Thanks for the audio!');
-                }else if(receive.isLocation()){
-                    client.sendLocation(
-                        receive.getFromMid(),
-                        receive.getText() + receive.getAddress(),
-                        receive.getLatitude(),
-                        receive.getLongitude()
-                    );
-                } else if(receive.isSticker()) {
-                    // This only works if the BOT account have the same sticker too
-                    client.sendSticker(
-                        receive.getFromMid(),
-                        receive.getStkId(),
-                        receive.getStkPkgId(),
-                        receive.getStkVer()
-                    );
-                }else if(receive.isContact()){
-                    client.sendText(receive.getFromMid(), 'Thanks for the contact');
-                }else{
-                    console.error('found unknown message type');
+                if(receive.getText()==='me'){
+                    client.getUserProfile(receive.getFromMid())
+                        .then(function onResult(res){
+                            if(res.status === 200){
+                                var contacts = res.body.contacts;
+                                if(contacts.length > 0){
+                                    client.sendText(receive.getFromMid(), 'Hi!, you\'re ' + contacts[0].displayName);
+                                }           
+                            }
+                        }, function onError(err){
+                          console.error(err);
+                        });
+                } else {
+                  client.sendText(receive.getFromMid(), receive.getText());
                 }
-            } else if(receive.isOperation()) {
-                console.log('found operation');
-            } else {
 
-                console.error('invalid receive type');
-
+            } else if(receive.isImage()) {
+                client.sendText(receive.getFromMid(), 'Thanks for the image!');
+            } else if(receive.isVideo()){
+                client.sendText(receive.getFromMid(), 'Thanks for the video!');
+            } else if(receive.isAudio()) {
+                client.sendText(receive.getFromMid(), 'Thanks for the audio!');
+            }else if(receive.isLocation()){
+                client.sendLocation(
+                    receive.getFromMid(),
+                    receive.getText() + receive.getAddress(),
+                    receive.getLatitude(),
+                    receive.getLongitude()
+                );
+            } else if(receive.isSticker()) {
+                // This only works if the BOT account have the same sticker too
+                client.sendSticker(
+                    receive.getFromMid(),
+                    receive.getStkId(),
+                    receive.getStkPkgId(),
+                    receive.getStkVer()
+                );
+            }else if(receive.isContact()){
+                client.sendText(receive.getFromMid(), 'Thanks for the contact');
+            }else{
+                console.error('found unknown message type');
             }
+        } else if(receive.isOperation()) {
+            console.log('found operation');
+        } else {
 
-        });
-    }
+            console.error('invalid receive type');
+
+        }
+
+    });
 
     res.send(200);
 });
