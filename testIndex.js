@@ -61,7 +61,9 @@ function replyLineMessage(replyToken, text) {
 
     request({
         url: 'https://api.line.me/v2/bot/message/reply',
-        Authorization: {Bearer: cT},
+        headers : {
+            "Authorization" : `Bearer ${cT}`
+        }
         method: 'POST',
         body: JSON.stringify({
             replyToken: replyToken,
