@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var request = require('superagent');
 var LineBot = require('line-bot-sdk');
+
 var client = LineBot.client({
     channelID: '1501651709',
     channelSecret: '239ce8176ae2ca2edc3939bcf26241ec',
@@ -17,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false, limit: 2 * 1024 * 1024 }));
 app.use(bodyParser.json({ limit: 2 * 1024 * 1024 }));
 
 app.post('/', function (req, res) {
-  console.log(req.body.result);
+  console.log('req.body.result :', req.body.result);
 
   var receives = client.createReceivesFromJSON(req.body);
   _.each(receives, function(receive){
