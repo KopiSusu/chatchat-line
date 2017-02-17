@@ -27,11 +27,36 @@ app.post('/', function (req, res) {
         let replyToken =  event.replyToken
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendLineMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            replyLineMessage(replyToken, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
 })
+
+function replyLineMessage(replyToken, text) {
+	console.log('text: ', text)
+
+    request({
+        url: 'https://api.line.me/v2/bot/message/push',
+        Authorization: {Bearer: cT},
+        method: 'POST',
+        body: {
+            replyToken: replyToken,
+            messages: [
+            	{
+	            	"type":"text",
+	            	"text":text
+	        	}
+	        ]
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
 
 
 function sendLineMessage(sender, text) {
@@ -41,8 +66,8 @@ function sendLineMessage(sender, text) {
         url: 'https://api.line.me/v2/bot/message/push',
         Authorization: {Bearer: cT},
         method: 'POST',
-        json: {
-            to: {id:sender},
+        body: {
+            to: {id: sender},
             messages: [
             	{
 	            	"type":"text",
