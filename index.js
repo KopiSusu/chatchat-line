@@ -60,6 +60,7 @@ function receiveLineMessage(sender, text) {
 
 
 app.post('/line/return', function (req, res) {
+    console.log('inside /line/return')
     console.log('req.body: ', req.body)
 
     let sender = req.body.sender_facebook_id;
